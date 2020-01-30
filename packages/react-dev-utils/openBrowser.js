@@ -16,9 +16,9 @@ var open = require('open');
 var OSX_CHROME = 'google chrome';
 
 const Actions = Object.freeze({
-  NONE : 0,
-  BROWSER : 1,
-  SCRIPT : 2,
+  NONE: 0,
+  BROWSER: 1,
+  SCRIPT: 2,
 });
 
 function getBrowserEnv() {
@@ -26,8 +26,9 @@ function getBrowserEnv() {
   // It is specific to the operating system.
   // See https://github.com/sindresorhus/open#app for documentation.
   const value = process.env.BROWSER;
-  const args =
-      process.env.BROWSER_ARGS ? process.env.BROWSER_ARGS.split(' ') : [];
+  const args = process.env.BROWSER_ARGS
+    ? process.env.BROWSER_ARGS.split(' ')
+    : [];
   let action;
   if (!value) {
     // Default.
@@ -39,19 +40,22 @@ function getBrowserEnv() {
   } else {
     action = Actions.BROWSER;
   }
-  return {action, value, args};
+  return { action, value, args };
 }
 
 function executeNodeScript(scriptPath, url) {
   const extraArgs = process.argv.slice(2);
-  const child = spawn('node', [ scriptPath, ...extraArgs, url ], {
-    stdio : 'inherit',
+  const child = spawn('node', [scriptPath, ...extraArgs, url], {
+    stdio: 'inherit',
   });
   child.on('close', code => {
     if (code !== 0) {
       console.log();
-      console.log(chalk.red(
-          'The script specified as BROWSER environment variable failed.'));
+      console.log(
+        chalk.red(
+          'The script specified as BROWSER environment variable failed.'
+        )
+      );
       console.log(chalk.cyan(scriptPath) + ' exited with code ' + code + '.');
       console.log();
       return;
@@ -66,8 +70,8 @@ function startBrowserProcess(browser, url, args) {
   // Chrome with AppleScript. This lets us reuse an
   // existing tab when possible instead of creating a new one.
   const shouldTryOpenChromeWithAppleScript =
-      process.platform === 'darwin' &&
-      (typeof browser !== 'string' || browser === OSX_CHROME);
+    process.platform === 'darwin' &&
+    (typeof browser !== 'string' || browser === OSX_CHROME);
 
   if (shouldTryOpenChromeWithAppleScript) {
     try {
@@ -75,8 +79,8 @@ function startBrowserProcess(browser, url, args) {
       // on OS X Google Chrome with AppleScript
       execSync('ps cax | grep "Google Chrome"');
       execSync('osascript openChrome.applescript "' + encodeURI(url) + '"', {
-        cwd : __dirname,
-        stdio : 'ignore',
+        cwd: __dirname,
+        stdio: 'ignore',
       });
       return true;
     } catch (err) {
@@ -95,13 +99,13 @@ function startBrowserProcess(browser, url, args) {
 
   // If there are arguments, they must be passed as array with the browser
   if (typeof browser === 'string' && args.length > 0) {
-    browser = [ browser ].concat(args);
+    browser = [browser].concat(args);
   }
 
   // Fallback to open
   // (It will always open new tab)
   try {
-    var options = {app : browser, wait : false};
+    var options = { app: browser, wait: false };
     open(url, options).catch(() => {}); // Prevent `unhandledRejection` error.
     return true;
   } catch (err) {
@@ -114,17 +118,17 @@ function startBrowserProcess(browser, url, args) {
  * Returns true if it opened a browser or ran a node.js script, otherwise false.
  */
 function openBrowser(url) {
-  const {action, value, args} = getBrowserEnv();
+  const { action, value, args } = getBrowserEnv();
   switch (action) {
-  case Actions.NONE:
-    // Special case: BROWSER="none" will prevent opening completely.
-    return false;
-  case Actions.SCRIPT:
-    return executeNodeScript(value, url);
-  case Actions.BROWSER:
-    return startBrowserProcess(value, url, args);
-  default:
-    throw new Error('Not implemented.');
+    case Actions.NONE:
+      // Special case: BROWSER="none" will prevent opening completely.
+      return false;
+    case Actions.SCRIPT:
+      return executeNodeScript(value, url);
+    case Actions.BROWSER:
+      return startBrowserProcess(value, url, args);
+    default:
+      throw new Error('Not implemented.');
   }
 }
 
