@@ -16,11 +16,11 @@ function print_help {
   echo ""
 }
 
-cd $(dirname $0)
+cd "$(dirname "$0")"
 
 node_version=12
 current_git_branch=`git rev-parse --abbrev-ref HEAD`
-git_branch=${current_git_branch}
+git_branch=$current_git_branch
 test_suite=all
 interactive=false
 
@@ -50,7 +50,7 @@ while [ "$1" != "" ]; do
 done
 
 test_command="./tasks/e2e-simple.sh && ./tasks/e2e-kitchensink.sh && ./tasks/e2e-kitchensink-eject.sh && ./tasks/e2e-installs.sh"
-case ${test_suite} in
+case $test_suite in
   "all")
     ;;
   "simple")
@@ -86,7 +86,7 @@ git apply patch
 rm patch
 CMD
 
-if [ ${git_branch} != ${current_git_branch} ]; then
+if [ "$git_branch" != "$current_git_branch" ]; then
   apply_changes=''
 fi
 
@@ -119,8 +119,8 @@ docker run \
   --tty \
   --rm \
   --user node \
-  --volume ${PWD}/..:/var/create-react-app \
+  --volume "$PWD"/..:/var/create-react-app \
   --workdir /home/node \
-  $([[ ${interactive} == 'true' ]] && echo '--interactive') \
-  node:${node_version} \
-  bash -c "${command}"
+  "$([[ ${interactive} == 'true' ]] && echo '--interactive')" \
+  node:"$node_version" \
+  bash -c "$command"
