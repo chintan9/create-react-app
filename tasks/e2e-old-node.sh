@@ -12,25 +12,25 @@
 # Start in tasks/ even if run from root directory
 cd "$(dirname "$0")"
 
-temp_app_path=`mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path'`
+temp_app_path=$(mktemp -d 2>/dev/null || mktemp -d -t 'temp_app_path')
 
-function cleanup {
+function cleanup() {
   echo 'Cleaning up.'
   cd "$root_path"
   rm -rf "$temp_app_path"
 }
 
 # Error messages are redirected to stderr
-function handle_error {
-  echo "$(basename "$0"): ERROR! An error was encountered executing line $1." 1>&2;
+function handle_error() {
+  echo "$(basename "$0"): ERROR! An error was encountered executing line $1." 1>&2
   cleanup
-  echo 'Exiting with error.' 1>&2;
+  echo 'Exiting with error.' 1>&2
   exit 1
 }
 
-function handle_exit {
+function handle_exit() {
   cleanup
-  echo 'Exiting without error.' 1>&2;
+  echo 'Exiting without error.' 1>&2
   exit
 }
 
@@ -54,7 +54,7 @@ cd "$root_path"
 
 # If the node version is < 10, the script should just give an error.
 cd "$temp_app_path"
-err_output=`node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 > /dev/null || echo ''`
+err_output=$(node "$root_path"/packages/create-react-app/index.js test-node-version 2>&1 >/dev/null || echo '')
 [[ $err_output =~ You\ are\ running\ Node ]] && exit 0 || exit 1
 
 # Cleanup

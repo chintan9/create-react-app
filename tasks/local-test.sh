@@ -4,7 +4,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-function print_help {
+function print_help() {
   echo "Usage: ${0} [OPTIONS]"
   echo ""
   echo "OPTIONS:"
@@ -19,7 +19,7 @@ function print_help {
 cd "$(dirname "$0")"
 
 node_version=12
-current_git_branch=`git rev-parse --abbrev-ref HEAD`
+current_git_branch=$(git rev-parse --abbrev-ref HEAD)
 git_branch=$current_git_branch
 test_suite=all
 interactive=false
@@ -51,8 +51,8 @@ done
 
 test_command="./tasks/e2e-simple.sh && ./tasks/e2e-kitchensink.sh && ./tasks/e2e-kitchensink-eject.sh && ./tasks/e2e-installs.sh && ./tasks/e2e-behavior.sh"
 case $test_suite in
-  "all")
-    ;;
+  "all") ;;
+
   "simple")
     test_command="./tasks/e2e-simple.sh"
     ;;
@@ -68,11 +68,11 @@ case $test_suite in
   "behavior")
     test_command="./tasks/e2e-behavior.sh"
     ;;
-  *)
-    ;;
+  *) ;;
+
 esac
 
-read -r -d '' apply_changes <<- CMD
+read -r -d '' apply_changes <<-CMD
 cd /var/create-react-app
 git config --global user.name "Create React App"
 git config --global user.email "cra@email.com"
@@ -90,7 +90,7 @@ if [ "$git_branch" != "$current_git_branch" ]; then
   apply_changes=''
 fi
 
-read -r -d '' command <<- CMD
+read -r -d '' command <<-CMD
 echo "prefix=~/.npm" > ~/.npmrc
 mkdir ~/.npm
 export PATH=\$PATH:~/.npm/bin
