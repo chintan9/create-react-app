@@ -9,8 +9,8 @@ import React from 'react';
 import aFileWithoutExt from './assets/aFileWithoutExt';
 
 const text = aFileWithoutExt.includes('base64')
-                 ? atob(aFileWithoutExt.split('base64,')[1]).trim()
-                 : aFileWithoutExt;
+  ? atob(aFileWithoutExt.split('base64,')[1]).trim()
+  : aFileWithoutExt;
 
 const NoExtInclusion = () => (
   <a id="feature-no-ext-inclusion" href={text}>

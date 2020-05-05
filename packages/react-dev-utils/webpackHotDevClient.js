@@ -25,10 +25,14 @@ var ErrorOverlay = require('react-error-overlay');
 ErrorOverlay.setEditorHandler(function editorHandler(errorLocation) {
   // Keep this sync with errorOverlayMiddleware.js
   fetch(
-      launchEditorEndpoint + '?fileName=' +
-      window.encodeURIComponent(errorLocation.fileName) + '&lineNumber=' +
+    launchEditorEndpoint +
+      '?fileName=' +
+      window.encodeURIComponent(errorLocation.fileName) +
+      '&lineNumber=' +
       window.encodeURIComponent(errorLocation.lineNumber || 1) +
-      '&colNumber=' + window.encodeURIComponent(errorLocation.colNumber || 1));
+      '&colNumber=' +
+      window.encodeURIComponent(errorLocation.colNumber || 1)
+  );
 });
 
 // We need to keep track of if there has been a runtime error.
@@ -39,34 +43,39 @@ ErrorOverlay.setEditorHandler(function editorHandler(errorLocation) {
 // See https://github.com/facebook/create-react-app/issues/3096
 var hadRuntimeError = false;
 ErrorOverlay.startReportingRuntimeErrors({
-  onError : function() { hadRuntimeError = true; },
-  filename : '/static/js/bundle.js',
+  onError: function () {
+    hadRuntimeError = true;
+  },
+  filename: '/static/js/bundle.js',
 });
 
 if (module.hot && typeof module.hot.dispose === 'function') {
-  module.hot.dispose(function() {
+  module.hot.dispose(function () {
     // TODO: why do we need this?
     ErrorOverlay.stopReportingRuntimeErrors();
   });
 }
 
 // Connect to WebpackDevServer via a socket.
-var connection = new WebSocket(url.format({
-  protocol : window.location.protocol === 'https:' ? 'wss' : 'ws',
-  hostname : process.env.WDS_SOCKET_HOST || window.location.hostname,
-  port : process.env.WDS_SOCKET_PORT || window.location.port,
-  // Hardcoded in WebpackDevServer
-  pathname : process.env.WDS_SOCKET_PATH || '/sockjs-node',
-  slashes : true,
-}));
+var connection = new WebSocket(
+  url.format({
+    protocol: window.location.protocol === 'https:' ? 'wss' : 'ws',
+    hostname: process.env.WDS_SOCKET_HOST || window.location.hostname,
+    port: process.env.WDS_SOCKET_PORT || window.location.port,
+    // Hardcoded in WebpackDevServer
+    pathname: process.env.WDS_SOCKET_PATH || '/sockjs-node',
+    slashes: true,
+  })
+);
 
 // Unlike WebpackDevServer client, we won't try to reconnect
 // to avoid spamming the console. Disconnect usually happens
 // when developer stops the server.
-connection.onclose = function() {
+connection.onclose = function () {
   if (typeof console !== 'undefined' && typeof console.info === 'function') {
     console.info(
-        'The development server has disconnected.\nRefresh the page if necessary.');
+      'The development server has disconnected.\nRefresh the page if necessary.'
+    );
   }
 };
 
@@ -113,15 +122,17 @@ function handleWarnings(warnings) {
   function printWarnings() {
     // Print warnings to the console.
     var formatted = formatWebpackMessages({
-      warnings : warnings,
-      errors : [],
+      warnings: warnings,
+      errors: [],
     });
 
     if (typeof console !== 'undefined' && typeof console.warn === 'function') {
       for (var i = 0; i < formatted.warnings.length; i++) {
         if (i === 5) {
-          console.warn('There were more warnings in other files.\n' +
-                       'You can find a complete log in the terminal.');
+          console.warn(
+            'There were more warnings in other files.\n' +
+              'You can find a complete log in the terminal.'
+          );
           break;
         }
         console.warn(stripAnsi(formatted.warnings[i]));
@@ -150,8 +161,8 @@ function handleErrors(errors) {
 
   // "Massage" webpack messages.
   var formatted = formatWebpackMessages({
-    errors : errors,
-    warnings : [],
+    errors: errors,
+    warnings: [],
   });
 
   // Only show the first error.
@@ -181,27 +192,27 @@ function handleAvailableHash(hash) {
 }
 
 // Handle messages from the server.
-connection.onmessage = function(e) {
+connection.onmessage = function (e) {
   var message = JSON.parse(e.data);
   switch (message.type) {
-  case 'hash':
-    handleAvailableHash(message.data);
-    break;
-  case 'still-ok':
-  case 'ok':
-    handleSuccess();
-    break;
-  case 'content-changed':
-    // Triggered when a file from `contentBase` changed.
-    window.location.reload();
-    break;
-  case 'warnings':
-    handleWarnings(message.data);
-    break;
-  case 'errors':
-    handleErrors(message.data);
-    break;
-  default:
+    case 'hash':
+      handleAvailableHash(message.data);
+      break;
+    case 'still-ok':
+    case 'ok':
+      handleSuccess();
+      break;
+    case 'content-changed':
+      // Triggered when a file from `contentBase` changed.
+      window.location.reload();
+      break;
+    case 'warnings':
+      handleWarnings(message.data);
+      break;
+    case 'errors':
+      handleErrors(message.data);
+      break;
+    default:
     // Do nothing.
   }
 };
@@ -215,7 +226,9 @@ function isUpdateAvailable() {
 }
 
 // webpack disallows updates in other states.
-function canApplyUpdates() { return module.hot.status() === 'idle'; }
+function canApplyUpdates() {
+  return module.hot.status() === 'idle';
+}
 
 // Attempt to update code on the fly, fall back to a hard reload.
 function tryApplyUpdates(onHotUpdateSuccess) {
@@ -255,7 +268,12 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   // // webpack 2 returns a Promise instead of invoking a callback
   if (result && result.then) {
     result.then(
-        function(updatedModules) { handleApplyUpdates(null, updatedModules); },
-        function(err) { handleApplyUpdates(err, null); });
+      function (updatedModules) {
+        handleApplyUpdates(null, updatedModules);
+      },
+      function (err) {
+        handleApplyUpdates(err, null);
+      }
+    );
   }
 }

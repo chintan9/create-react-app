@@ -6,13 +6,14 @@
  */
 
 import React from 'react';
-import {ReactComponent as Logo} from './assets/logo.svg';
+import { ReactComponent as Logo } from './assets/logo.svg';
 
-const SvgComponent = () => { return <Logo id = "feature-svg-component" />; };
+const SvgComponent = () => {
+  return <Logo id="feature-svg-component" />;
+};
 
 export const SvgComponentWithRef = React.forwardRef((props, ref) => (
-  <Logo id="feature-svg-component-with-ref" ref={
-  ref} />
+  <Logo id="feature-svg-component-with-ref" ref={ref} />
 ));
 
 export default SvgComponent;

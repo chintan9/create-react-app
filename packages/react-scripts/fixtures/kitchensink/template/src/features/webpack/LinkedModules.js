@@ -8,7 +8,7 @@
 import './assets/style.css';
 
 import React from 'react';
-import {test, version} from 'test-integrity';
+import { test, version } from 'test-integrity';
 
 const LinkedModules = () => {
   const v = version();

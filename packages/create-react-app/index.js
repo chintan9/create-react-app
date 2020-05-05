@@ -41,9 +41,13 @@ var semver = currentNodeVersion.split('.');
 var major = semver[0];
 
 if (major < 10) {
-  console.error('You are running Node ' + currentNodeVersion + '.\n' +
-                'Create React App requires Node 10 or higher. \n' +
-                'Please update your version of Node.');
+  console.error(
+    'You are running Node ' +
+      currentNodeVersion +
+      '.\n' +
+      'Create React App requires Node 10 or higher. \n' +
+      'Please update your version of Node.'
+  );
   process.exit(1);
 }
 
