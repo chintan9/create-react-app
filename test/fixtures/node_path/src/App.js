@@ -5,29 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component } from 'react';
-
-import PropTypes from 'prop-types';
 import load from 'absoluteLoad';
+import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 
 export default class App extends Component {
   static propTypes = {
-    onReady: PropTypes.func.isRequired,
+    onReady : PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
-    this.state = { users: [] };
+    this.state = {users : []};
   }
 
   async componentDidMount() {
     const users = load();
-    this.setState({ users });
+    this.setState({users});
   }
 
-  componentDidUpdate() {
-    this.props.onReady();
-  }
+  componentDidUpdate() { this.props.onReady(); }
 
   render() {
     return (
@@ -38,4 +35,4 @@ export default class App extends Component {
       </div>
     );
   }
-}
+  }

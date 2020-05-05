@@ -5,25 +5,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 
 function* load(limit) {
   let i = 1;
   while (i <= limit) {
-    yield { id: i, name: i };
+    yield {id : i, name : i};
     i++;
   }
 }
 
 export default class Generators extends Component {
   static propTypes = {
-    onReady: PropTypes.func.isRequired,
+    onReady : PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
-    this.state = { users: [] };
+    this.state = {users : []};
   }
 
   componentDidMount() {
@@ -31,12 +31,10 @@ export default class Generators extends Component {
     for (let user of load(4)) {
       users.push(user);
     }
-    this.setState({ users });
+    this.setState({users});
   }
 
-  componentDidUpdate() {
-    this.props.onReady();
-  }
+  componentDidUpdate() { this.props.onReady(); }
 
   render() {
     return (
@@ -47,4 +45,4 @@ export default class Generators extends Component {
       </div>
     );
   }
-}
+  }

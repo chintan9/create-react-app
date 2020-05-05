@@ -6,8 +6,9 @@
  */
 
 import React from 'react';
-import styles from './assets/scss-styles.module.scss';
+
 import indexStyles from './assets/index.module.scss';
+import styles from './assets/scss-styles.module.scss';
 
 const ScssModulesInclusion = () => (
   <div>

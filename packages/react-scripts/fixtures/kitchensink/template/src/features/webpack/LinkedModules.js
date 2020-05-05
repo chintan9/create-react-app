@@ -5,9 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
 import './assets/style.css';
-import { test, version } from 'test-integrity';
+
+import React from 'react';
+import {test, version} from 'test-integrity';
 
 const LinkedModules = () => {
   const v = version();

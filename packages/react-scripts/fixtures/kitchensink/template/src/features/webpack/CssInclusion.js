@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
 import './assets/style.css';
+
+import React from 'react';
 
 const CssInclusion = () => (
   <p id="feature-css-inclusion">We love useless text.</p>

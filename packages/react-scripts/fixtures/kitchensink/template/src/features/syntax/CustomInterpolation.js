@@ -5,43 +5,40 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 
-const styled = ([style]) =>
-  style
-    .trim()
-    .split(/\s*;\s*/)
-    .map(rule => rule.split(/\s*:\s*/))
-    .reduce((rules, rule) => ({ ...rules, [rule[0]]: rule[1] }), {});
+const styled = ([ style ]) =>
+    style.trim()
+        .split(/\s*;\s*/)
+        .map(rule => rule.split(/\s*:\s*/))
+        .reduce((rules, rule) => ({...rules, [rule[0]] : rule[1]}), {});
 
 function load() {
   return [
-    { id: 1, name: '1' },
-    { id: 2, name: '2' },
-    { id: 3, name: '3' },
-    { id: 4, name: '4' },
+    {id : 1, name : '1'},
+    {id : 2, name : '2'},
+    {id : 3, name : '3'},
+    {id : 4, name : '4'},
   ];
 }
 
 export default class CustomInterpolation extends Component {
   static propTypes = {
-    onReady: PropTypes.func.isRequired,
+    onReady : PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
-    this.state = { users: [] };
+    this.state = {users : []};
   }
 
   async componentDidMount() {
     const users = load();
-    this.setState({ users });
+    this.setState({users});
   }
 
-  componentDidUpdate() {
-    this.props.onReady();
-  }
+  componentDidUpdate() { this.props.onReady(); }
 
   render() {
     const veryInlineStyle = styled`
@@ -59,4 +56,4 @@ export default class CustomInterpolation extends Component {
       </div>
     );
   }
-}
+  }

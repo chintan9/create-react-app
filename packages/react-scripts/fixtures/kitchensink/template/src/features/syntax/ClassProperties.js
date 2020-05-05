@@ -5,24 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, {Component} from 'react';
 
 export default class ClassProperties extends Component {
   static propTypes = {
-    onReady: PropTypes.func.isRequired,
+    onReady : PropTypes.func.isRequired,
   };
 
   users = [
-    { id: 1, name: '1' },
-    { id: 2, name: '2' },
-    { id: 3, name: '3' },
-    { id: 4, name: '4' },
+    {id : 1, name: '1'},
+    {id : 2, name: '2'},
+    {id : 3, name: '3'},
+    {id : 4, name: '4'},
   ];
 
-  componentDidMount() {
-    this.props.onReady();
-  }
+  componentDidMount() { this.props.onReady(); }
 
   render() {
     return (
@@ -33,4 +31,4 @@ export default class ClassProperties extends Component {
       </div>
     );
   }
-}
+  }

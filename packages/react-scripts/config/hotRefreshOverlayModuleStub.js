@@ -5,7 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// This file is currently required because the error overlay has a bug preventing the its outright disabling.
+// This file is currently required because the error overlay has a bug
+// preventing the its outright disabling.
 
 'use strict';
 

@@ -6,8 +6,9 @@
  */
 
 import React from 'react';
-import styles from './assets/sass-styles.module.sass';
+
 import indexStyles from './assets/index.module.sass';
+import styles from './assets/sass-styles.module.sass';
 
 const SassModulesInclusion = () => (
   <div>
