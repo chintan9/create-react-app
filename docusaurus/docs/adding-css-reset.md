@@ -6,7 +6,10 @@ sidebar_label: Adding CSS Reset
 
 This project setup uses [PostCSS Normalize] for adding a [CSS Reset].
 
-To start using it, add `@import-normalize;` anywhere in your CSS file(s). You only need to include it once and duplicate imports are automatically removed. Since you only need to include it once, a good place to add it is `index.css` or `App.css`.
+To start using it, add `@import-normalize;` anywhere in your CSS file(s). You
+only need to include it once and duplicate imports are automatically removed.
+Since you only need to include it once, a good place to add it is `index.css` or
+`App.css`.
 
 ## `index.css`
 
@@ -16,9 +19,12 @@ To start using it, add `@import-normalize;` anywhere in your CSS file(s). You on
 /* rest of app styles */
 ```
 
-> **Tip**: If you see an "_Unknown at rule @import-normalize css(unknownAtRules)_" warning in VSCode, change the  `css.lint.unknownAtRules` setting to `ignore`.
+> **Tip**: If you see an "_Unknown at rule @import-normalize
+> css(unknownAtRules)_" warning in VSCode, change the `css.lint.unknownAtRules`
+> setting to `ignore`.
 
-You can control which parts of [normalize.css] to use via your project's [browserslist].
+You can control which parts of [normalize.css] to use via your project's
+[browserslist].
 
 Results when [browserslist] is `last 3 versions`:
 
@@ -55,7 +61,8 @@ img {
 
 ## Browser support
 
-Browser support is dictated by what normalize.css [supports]. As of this writing, it includes:
+Browser support is dictated by what normalize.css [supports]. As of this
+writing, it includes:
 
 - Chrome (last 3)
 - Edge (last 3)

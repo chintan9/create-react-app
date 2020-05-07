@@ -17,10 +17,10 @@
 // It would probably be more strict.
 
 // The ESLint browser environment defines all browser globals as valid,
-// even though most people don't know some of them exist (e.g. `name` or `status`).
-// This is dangerous as it hides accidentally undefined variables.
-// We blacklist the globals that we deem potentially confusing.
-// To use them, explicitly reference them, e.g. `window.name` or `window.status`.
+// even though most people don't know some of them exist (e.g. `name` or
+// `status`). This is dangerous as it hides accidentally undefined variables. We
+// blacklist the globals that we deem potentially confusing. To use them,
+// explicitly reference them, e.g. `window.name` or `window.status`.
 const restrictedGlobals = require('confusing-browser-globals');
 
 module.exports = {
@@ -70,11 +70,14 @@ module.exports = {
       // If adding a typescript-eslint version of an existing ESLint rule,
       // make sure to disable the ESLint rule here.
       rules: {
-        // TypeScript's `noFallthroughCasesInSwitch` option is more robust (#6906)
+        // TypeScript's `noFallthroughCasesInSwitch` option is more robust
+        // (#6906)
         'default-case': 'off',
-        // 'tsc' already handles this (https://github.com/typescript-eslint/typescript-eslint/issues/291)
+        // 'tsc' already handles this
+        // (https://github.com/typescript-eslint/typescript-eslint/issues/291)
         'no-dupe-class-members': 'off',
-        // 'tsc' already handles this (https://github.com/typescript-eslint/typescript-eslint/issues/477)
+        // 'tsc' already handles this
+        // (https://github.com/typescript-eslint/typescript-eslint/issues/477)
         'no-undef': 'off',
 
         // Add TypeScript specific rules (and turn off ESLint equivalents)
@@ -114,8 +117,10 @@ module.exports = {
     },
   ],
 
-  // NOTE: When adding rules here, you need to make sure they are compatible with
-  // `typescript-eslint`, as some rules such as `no-array-constructor` aren't compatible.
+  // NOTE: When adding rules here, you need to make sure they are compatible
+  // with
+  // `typescript-eslint`, as some rules such as `no-array-constructor` aren't
+  // compatible.
   rules: {
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',

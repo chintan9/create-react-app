@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
 import './assets/sass-styles.sass';
+
+import React from 'react';
 
 const SassInclusion = () => (
   <p id="feature-sass-inclusion">We love useless text.</p>

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 function load() {
   return Promise.resolve([
@@ -28,7 +28,7 @@ export default class Promises extends Component {
   }
 
   componentDidMount() {
-    load().then(users => {
+    load().then((users) => {
       this.setState({ users });
     });
   }
@@ -40,7 +40,7 @@ export default class Promises extends Component {
   render() {
     return (
       <div id="feature-promises">
-        {this.state.users.map(user => (
+        {this.state.users.map((user) => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

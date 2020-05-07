@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 async function load() {
   return {
@@ -41,7 +41,7 @@ export default class DestructuringAndAwait extends Component {
   render() {
     return (
       <div id="feature-destructuring-and-await">
-        {this.state.users.map(user => (
+        {this.state.users.map((user) => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

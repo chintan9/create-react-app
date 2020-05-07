@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 function load() {
   return [
@@ -39,7 +39,7 @@ export default class OptionalChaining extends Component {
   render() {
     return (
       <div id="feature-optional-chaining">
-        {this.state.users.map(user => (
+        {this.state.users.map((user) => (
           <div key={user.id}>{user?.name}</div>
         ))}
       </div>

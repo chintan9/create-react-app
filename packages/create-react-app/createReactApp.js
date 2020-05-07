@@ -59,7 +59,7 @@ const program = new commander.Command(packageJson.name)
   .version(packageJson.version)
   .arguments('<project-directory>')
   .usage(`${chalk.green('<project-directory>')} [options]`)
-  .action(name => {
+  .action((name) => {
     projectName = name;
   })
   .option('--verbose', 'print additional logs')
@@ -269,7 +269,8 @@ function createApp(
               `Please update to Yarn 1.12 or higher for a better, fully supported experience.\n`
           )
         );
-        // 1.11 had an issue with webpack-dev-middleware, so better not use PnP with it (never reached stable, but still)
+        // 1.11 had an issue with webpack-dev-middleware, so better not use PnP
+        // with it (never reached stable, but still)
         usePnp = false;
       }
       if (!yarnInfo.hasMaxYarnPnp) {
@@ -305,9 +306,8 @@ function createApp(
     let yarnUsesDefaultRegistry = true;
     try {
       yarnUsesDefaultRegistry =
-        execSync('yarnpkg config get registry')
-          .toString()
-          .trim() === 'https://registry.yarnpkg.com';
+        execSync('yarnpkg config get registry').toString().trim() ===
+        'https://registry.yarnpkg.com';
     } catch (e) {
       // ignore
     }
@@ -390,7 +390,7 @@ function install(root, useYarn, usePnp, dependencies, verbose, isOnline) {
     }
 
     const child = spawn(command, args, { stdio: 'inherit' });
-    child.on('close', code => {
+    child.on('close', (code) => {
       if (code !== 0) {
         reject({
           command: `${command} ${args.join(' ')}`,
@@ -425,7 +425,7 @@ function run(
       getPackageInfo(templateToInstall),
     ])
       .then(([packageInfo, templateInfo]) =>
-        checkIfOnline(useYarn).then(isOnline => ({
+        checkIfOnline(useYarn).then((isOnline) => ({
           isOnline,
           packageInfo,
           templateInfo,
@@ -441,7 +441,8 @@ function run(
           packageVersion = templatesVersionMinimum;
         }
 
-        // Only support templates when used alongside new react-scripts versions.
+        // Only support templates when used alongside new react-scripts
+        // versions.
         const supportsTemplates = semver.gte(
           packageVersion,
           templatesVersionMinimum
@@ -522,7 +523,7 @@ function run(
           );
         }
       })
-      .catch(reason => {
+      .catch((reason) => {
         console.log();
         console.log('Aborting installation.');
         if (reason.command) {
@@ -542,8 +543,8 @@ function run(
           'node_modules',
         ];
         const currentFiles = fs.readdirSync(path.join(root));
-        currentFiles.forEach(file => {
-          knownGeneratedFiles.forEach(fileToMatch => {
+        currentFiles.forEach((file) => {
+          knownGeneratedFiles.forEach((fileToMatch) => {
             // This removes all knownGeneratedFiles.
             if (file === fileToMatch) {
               console.log(`Deleting generated file... ${chalk.cyan(file)}`);
@@ -607,7 +608,7 @@ function getInstallPackage(version, originalDirectory) {
           message: script.message,
           default: false,
         })
-        .then(answer => {
+        .then((answer) => {
           if (!answer.useScript) {
             process.exit(0);
           }
@@ -693,7 +694,7 @@ function getTemporaryDirectory() {
 function extractStream(stream, dest) {
   return new Promise((resolve, reject) => {
     stream.pipe(
-      unpack(dest, err => {
+      unpack(dest, (err) => {
         if (err) {
           reject(err);
         } else {
@@ -708,7 +709,7 @@ function extractStream(stream, dest) {
 function getPackageInfo(installPackage) {
   if (installPackage.match(/^.+\.(tgz|tar\.gz)$/)) {
     return getTemporaryDirectory()
-      .then(obj => {
+      .then((obj) => {
         let stream;
         if (/^http/.test(installPackage)) {
           stream = hyperquest(installPackage);
@@ -717,7 +718,7 @@ function getPackageInfo(installPackage) {
         }
         return extractStream(stream, obj.tmpdir).then(() => obj);
       })
-      .then(obj => {
+      .then((obj) => {
         const { name, version } = require(path.join(
           obj.tmpdir,
           'package.json'
@@ -725,9 +726,10 @@ function getPackageInfo(installPackage) {
         obj.cleanup();
         return { name, version };
       })
-      .catch(err => {
-        // The package name could be with or without semver version, e.g. react-scripts-0.2.0-alpha.1.tgz
-        // However, this function returns package name only without semver version.
+      .catch((err) => {
+        // The package name could be with or without semver version, e.g.
+        // react-scripts-0.2.0-alpha.1.tgz However, this function returns
+        // package name only without semver version.
         console.log(
           `Could not extract the package name from the archive: ${err.message}`
         );
@@ -769,9 +771,7 @@ function checkNpmVersion() {
   let hasMinNpm = false;
   let npmVersion = null;
   try {
-    npmVersion = execSync('npm --version')
-      .toString()
-      .trim();
+    npmVersion = execSync('npm --version').toString().trim();
     hasMinNpm = semver.gte(npmVersion, '6.0.0');
   } catch (err) {
     // ignore
@@ -789,9 +789,7 @@ function checkYarnVersion() {
   let hasMaxYarnPnp = false;
   let yarnVersion = null;
   try {
-    yarnVersion = execSync('yarnpkg --version')
-      .toString()
-      .trim();
+    yarnVersion = execSync('yarnpkg --version').toString().trim();
     if (semver.valid(yarnVersion)) {
       hasMinYarnPnp = semver.gte(yarnVersion, minYarnPnp);
       hasMaxYarnPnp = semver.lt(yarnVersion, maxYarnPnp);
@@ -860,7 +858,7 @@ function checkAppName(appName) {
     [
       ...(validationResult.errors || []),
       ...(validationResult.warnings || []),
-    ].forEach(error => {
+    ].forEach((error) => {
       console.error(chalk.red(`  * ${error}`));
     });
     console.error(chalk.red('\nPlease choose a different project name.'));
@@ -877,7 +875,7 @@ function checkAppName(appName) {
         )} because a dependency with the same name exists.\n` +
           `Due to the way npm works, the following names are not allowed:\n\n`
       ) +
-        chalk.cyan(dependencies.map(depName => `  ${depName}`).join('\n')) +
+        chalk.cyan(dependencies.map((depName) => `  ${depName}`).join('\n')) +
         chalk.red('\n\nPlease choose a different project name.')
     );
     process.exit(1);
@@ -958,17 +956,17 @@ function isSafeToCreateProjectIn(root, name) {
     'yarn-error.log',
     'yarn-debug.log',
   ];
-  const isErrorLog = file => {
-    return errorLogFilePatterns.some(pattern => file.startsWith(pattern));
+  const isErrorLog = (file) => {
+    return errorLogFilePatterns.some((pattern) => file.startsWith(pattern));
   };
 
   const conflicts = fs
     .readdirSync(root)
-    .filter(file => !validFiles.includes(file))
+    .filter((file) => !validFiles.includes(file))
     // IntelliJ IDEA creates module files before CRA is launched
-    .filter(file => !/\.iml$/.test(file))
+    .filter((file) => !/\.iml$/.test(file))
     // Don't treat log files from previous installation as conflicts
-    .filter(file => !isErrorLog(file));
+    .filter((file) => !isErrorLog(file));
 
   if (conflicts.length > 0) {
     console.log(
@@ -996,7 +994,7 @@ function isSafeToCreateProjectIn(root, name) {
   }
 
   // Remove any log files from a previous installation.
-  fs.readdirSync(root).forEach(file => {
+  fs.readdirSync(root).forEach((file) => {
     if (isErrorLog(file)) {
       fs.removeSync(path.join(root, file));
     }
@@ -1010,9 +1008,7 @@ function getProxy() {
   } else {
     try {
       // Trying to read https-proxy from .npmrc
-      let httpsProxy = execSync('npm config get https-proxy')
-        .toString()
-        .trim();
+      let httpsProxy = execSync('npm config get https-proxy').toString().trim();
       return httpsProxy !== 'null' ? httpsProxy : undefined;
     } catch (e) {
       return;
@@ -1045,7 +1041,7 @@ function checkThatNpmCanReadCwd() {
   // "; cwd = C:\path\to\current\dir" (unquoted)
   // I couldn't find an easier way to get it.
   const prefix = '; cwd = ';
-  const line = lines.find(line => line.startsWith(prefix));
+  const line = lines.find((line) => line.startsWith(prefix));
   if (typeof line !== 'string') {
     // Fail gracefully. They could remove it.
     return true;
@@ -1089,13 +1085,13 @@ function checkIfOnline(useYarn) {
     return Promise.resolve(true);
   }
 
-  return new Promise(resolve => {
-    dns.lookup('registry.yarnpkg.com', err => {
+  return new Promise((resolve) => {
+    dns.lookup('registry.yarnpkg.com', (err) => {
       let proxy;
       if (err != null && (proxy = getProxy())) {
         // If a proxy is defined, we likely can't resolve external hostnames.
         // Try to resolve the proxy name as an indication of a connection.
-        dns.lookup(url.parse(proxy).hostname, proxyErr => {
+        dns.lookup(url.parse(proxy).hostname, (proxyErr) => {
           resolve(proxyErr == null);
         });
       } else {
@@ -1113,7 +1109,7 @@ function executeNodeScript({ cwd, args }, data, source) {
       { cwd, stdio: 'inherit' }
     );
 
-    child.on('close', code => {
+    child.on('close', (code) => {
       if (code !== 0) {
         reject({
           command: `node ${args.join(' ')}`,

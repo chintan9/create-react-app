@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 export default class ClassProperties extends Component {
   static propTypes = {
@@ -27,7 +27,7 @@ export default class ClassProperties extends Component {
   render() {
     return (
       <div id="feature-class-properties">
-        {this.users.map(user => (
+        {this.users.map((user) => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

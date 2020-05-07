@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component } from 'react';
-
-import PropTypes from 'prop-types';
 import load from 'absoluteLoad';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 export default class App extends Component {
   static propTypes = {
@@ -32,7 +31,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        {this.state.users.map(user => (
+        {this.state.users.map((user) => (
           <div key={user.id}>{user.name}</div>
         ))}
       </div>

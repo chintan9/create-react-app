@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 function load(prefix) {
   return [
@@ -39,7 +39,7 @@ export default class ComputedProperties extends Component {
   render() {
     return (
       <div id="feature-computed-properties">
-        {this.state.users.map(user => (
+        {this.state.users.map((user) => (
           <div key={user.id}>{user.user_name}</div>
         ))}
       </div>
